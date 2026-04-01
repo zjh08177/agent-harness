@@ -2,6 +2,36 @@
 
 Reference this file from auto-workflow, auto-explore, auto-debug instead of duplicating.
 
+## Phase 0: Dependency Check (MANDATORY — runs before any phase)
+
+Before starting, check which optional skill repos are installed locally. Run this silently:
+
+```bash
+missing=""
+for skill in feature-dev superpowers planning-with-files pr-review-toolkit code-simplifier; do
+  [ ! -d ~/.claude/skills/$skill ] && missing="$missing $skill"
+done
+[ -n "$missing" ] && echo "MISSING:$missing" || echo "ALL_PRESENT"
+```
+
+**If any are missing**, inform the user ONCE at the start:
+
+> ⚠️ **Optional skills not found:**`{list}`
+>
+> The meta-skills use these for sub-agent orchestration (code review, test analysis, planning).
+> Install with: `npx skills add {repo} -g`
+>
+> Proceeding in **degraded mode** — the lead agent will handle these phases inline instead of delegating to specialized sub-agents.
+
+**Degraded mode rules:**
+- Missing `feature-dev` → Lead agent does code exploration, architecture review, and code review directly (no sub-agents for these roles)
+- Missing `superpowers` → Skip structured planning templates; use inline task lists instead
+- Missing `planning-with-files` → Write planning files with `Write` tool directly instead of the skill
+- Missing `pr-review-toolkit` → Skip dedicated test coverage analysis; lead agent reviews tests inline
+- Missing `code-simplifier` → Skip post-implementation simplification pass
+
+The skill MUST still complete all phases — degraded mode changes WHO does the work (lead vs sub-agent), not WHETHER the work happens.
+
 ## Team Setup (MANDATORY)
 
 1. Use `TeamCreate` to create a team for this session
