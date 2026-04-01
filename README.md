@@ -82,6 +82,37 @@ bash install.sh
 
 Then merge `hooks/settings.json.example` into `~/.claude/settings.json` and restart Claude Code.
 
+## External Dependencies
+
+The meta-skills orchestrate sub-agents from other community skill repos. They work without these installed (degraded mode — lead agent handles everything inline), but the full multi-agent orchestration requires them.
+
+| Dependency | Used by | Role | Repo |
+|-----------|---------|------|------|
+| **superpowers** | auto-workflow, auto-debug | Planning templates, systematic debugging methodology | [obra/superpowers](https://github.com/obra/superpowers) |
+| **planning-with-files** | All 3 skills (via SKILL_BASE) | Persistent markdown task plans, progress tracking | [OthmanAdi/planning-with-files](https://github.com/OthmanAdi/planning-with-files) |
+| **feature-dev** | auto-workflow, auto-explore, auto-debug | code-explorer, code-architect, code-reviewer sub-agents | [wshobson/agents](https://github.com/wshobson/agents) |
+| **pr-review-toolkit** | auto-workflow, auto-debug | pr-test-analyzer for test coverage review | Built-in Claude Code plugin |
+| **code-simplifier** | auto-workflow | Post-implementation code cleanup pass | Built-in Claude Code plugin |
+| **unused-code-cleaner** | auto-workflow | Dead code removal after refactoring | Built-in Claude Code plugin |
+
+Install community skills:
+```bash
+npx @anthropic-ai/claude-code-skills add obra/superpowers -g
+npx @anthropic-ai/claude-code-skills add OthmanAdi/planning-with-files -g
+npx @anthropic-ai/claude-code-skills add wshobson/agents -g
+```
+
+Built-in plugins (`pr-review-toolkit`, `code-simplifier`, `unused-code-cleaner`) ship with Claude Code — no separate install needed.
+
+## Acknowledgments
+
+This harness builds on ideas and tools from the Claude Code community:
+
+- [everything-claude-code](https://github.com/affaan-m/everything-claude-code) — The comprehensive agent harness optimization system that pioneered many of these patterns
+- [superpowers](https://github.com/obra/superpowers) — Agentic skills framework with TDD and systematic debugging
+- [planning-with-files](https://github.com/OthmanAdi/planning-with-files) — Manus-style persistent markdown planning
+- [wshobson/agents](https://github.com/wshobson/agents) — Multi-agent orchestration with specialized code review agents
+
 ## License
 
 MIT
