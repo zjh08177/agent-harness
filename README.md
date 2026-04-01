@@ -1,19 +1,78 @@
-# Agent Harness: Hooks, Memory & Meta-Skills for Claude Code
+# Agent Harness
 
-> **The model is what thinks. The harness is what it thinks about.**
+Hooks, memory system, and meta-skills for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Built over 2+ months of daily use on real projects.
 
-A production-tested harness system for [Claude Code](https://docs.anthropic.com/en/docs/claude-code) that turns suggestions into laws, gives agents persistent memory, and encodes complete workflows as one-click skills.
+## What's in here
 
-## What's in the box
+### Hooks (`hooks/`)
 
-| Layer | What | Why |
-|-------|------|-----|
-| **Hooks** | 8 shell scripts + settings.json config | Turn CLAUDE.md rules into mechanically enforced constraints |
-| **Memory** | Dual-system template (auto-memory + MCP Memory) | Agent remembers decisions, corrections, and patterns across sessions |
-| **Meta-Skills** | 3 autonomous workflows + shared base + reviewer constitution | One-click research, debugging, and development with anti-sycophancy |
-| **nano-image-gen** | Knowledge card illustration generator | Demo skill: eval-driven image generation loop via Gemini API |
+8 shell scripts that hook into Claude Code's lifecycle events. They turn CLAUDE.md suggestions into mechanically enforced rules.
 
-## Quick Start
+**Deliverable Gate** (`deliverable-gate.sh`) — Runs on every `UserPromptSubmit`. Injects a one-line rule: "declare what you'll produce before you start exploring." Prevents the agent from wandering for 10 minutes without output.
+
+**Memory Chain** — Four hooks that work together to force the agent to store learnings after every git commit:
+- `memory-commit-flag.sh` (`PostToolUse[Bash]`) — Detects `git commit` in Bash output, writes a `/tmp` flag file
+- `memory-gate.sh` (`UserPromptSubmit`) — Checks for the flag, blocks the agent with a `BLOCKED — MEMORY UPDATE REQUIRED` message until it saves a memory
+- `memory-clear-flag.sh` (`PostToolUse[Write, mcp__memory]`) — Clears the flag once memory is stored
+- `memory-update-check.sh` (`Stop`) — Final check before session ends
+
+**Environment & Guards:**
+- `env-bootstrap.sh` (`PreToolUse[Bash]`) — Ensures env vars (like API keys) are loaded before shell commands
+- `doc-convention-guard.sh` (`UserPromptSubmit`) — Enforces file naming and placement conventions for documentation
+- `agent-budget.sh` (`PostToolUse[Agent]`) — Tracks how many subagents have been spawned, warns when approaching budget
+
+`hooks/settings.json.example` has the full lifecycle mapping — merge it into your `~/.claude/settings.json`.
+
+### Memory System (`memory/`)
+
+A dual-system design for persistent cross-session knowledge:
+
+**Auto-memory files** (project-level, `~/.claude/projects/<project>/memory/`) — Always loaded into context. Typed with frontmatter:
+- `user` — Who you are, how you work, what you know
+- `feedback` — Corrections and confirmed approaches (rule + WHY + how to apply)
+- `project` — Ongoing decisions, constraints, deadlines
+- `reference` — Pointers to external systems (Linear boards, Grafana dashboards, etc.)
+
+**MCP Memory** (`mcp__memory` tools) — Cross-project entity-observation graph. Only used for recalling patterns from *other* projects.
+
+**Quality rules:** Store WHY, not WHAT. Don't store things you can derive from `git log` or `git blame`. Before saving, ask: "Would a future session be measurably more efficient knowing this?"
+
+`MEMORY.md.template` is the index file. `examples/` has one sample of each type.
+
+### Meta-Skills (`skills/`)
+
+Three autonomous workflows that encode complete engineering processes as one-click skills. Each orchestrates multiple sub-agents with structured review loops.
+
+**`auto-workflow`** — 8-phase autonomous development: Context Gathering → Red Team → Tech Solution → Implementation Plan → Implementation → Code Review → Testing → Conclusion. The Red Team phase is a hard gate — two agents validate your premises before any code is written. In practice this caught 3 out of 5 wrong directions in one sprint.
+
+**`auto-explore`** — 5-phase progressive research: Scope → Investigate → Synthesize → Review → Deliver. Runs at least 3 rounds, each deeper than the last. Deploys parallel sub-agents (web search, code exploration, technical research) and cross-verifies across sources. Stops only after 2 consecutive rounds with no new findings.
+
+**`auto-debug`** — 5-phase hypothesis-driven debugging: Reproduce → Diagnose → Fix → Verify → Conclude. Generates ≥3 competing hypotheses and tries to *falsify* each one — the first explanation that fits symptoms is rarely the root cause. API-related bugs require real call verification, not assumptions.
+
+**Shared infrastructure** (`skills/shared/`):
+- `SKILL_BASE.md` — Common skeleton all three skills extend (DRY). Defines lightweight mode, vault integration, planning file management.
+- `REVIEWER_CONSTITUTION.md` — Anti-sycophancy constraints injected into every review agent: forced dissent (must find N issues before ACCEPT), category diversity (≥2 categories), evidence requirements (location + failure scenario + fix), "LGTM" banned. Reviewers return structured verdicts (ACCEPT/REJECT + confidence + blocking issues).
+
+> **Note:** The meta-skills orchestrate sub-agents from other Claude Code skill repos — `feature-dev` (code-explorer, code-architect, code-reviewer), `pr-review-toolkit` (pr-test-analyzer), `code-simplifier`, `superpowers` (planning, systematic debugging), and `planning-with-files`. Install these separately if you want the full orchestration; the skills degrade gracefully without them.
+
+### nano-image-gen (`skills/nano-image-gen/`)
+
+Demo skill: generates knowledge card illustrations (知识卡片) via Google Gemini API with an eval-driven feedback loop.
+
+The loop: generate image → multimodal read → score on 8 dimensions (/40, pass ≥32) → diagnose failures via lookup table → fix prompt → regenerate. Human defines the scoring rubric and failure→fix mappings; agent executes the loop autonomously.
+
+Includes:
+- `SKILL.md` — Full workflow description with 6 proven visual patterns (labeled metaphor, split comparison, 2×2 grid, building cross-section, ascending staircase, horizontal triptych)
+- `scripts/generate.sh` — Gemini API caller with embedded style anchor (Ligne Claire flat editorial)
+- `references/eval-criteria.md` — 8-dimension evaluation rubric
+
+Requires `GEMINI_API_KEY` env var.
+
+### CLAUDE.md Template
+
+`CLAUDE.md.template` — Sanitized starter for your own `~/.claude/CLAUDE.md`. Sections: project info, directory structure, quick commands, MUST/NEVER rules, code conventions, common mistakes, memory protocol. Keep it under 200 lines — agent compliance drops after that.
+
+## Install
 
 ```bash
 git clone https://github.com/zjh08177/agent-harness.git
@@ -21,95 +80,7 @@ cd agent-harness
 bash install.sh
 ```
 
-Then merge `hooks/settings.json.example` into your `~/.claude/settings.json` and restart Claude Code.
-
-## Architecture
-
-```
-┌─────────────────────────────────────────────────────┐
-│  Meta-Skills (auto-workflow, auto-explore, auto-debug)│
-│  ┌──────────────────────────────────────────────────┐│
-│  │  Memory System (auto-memory + MCP Memory)        ││
-│  │  ┌──────────────────────────────────────────────┐││
-│  │  │  Hooks (deliverable-gate, memory-chain, ...)│││
-│  │  │  ┌──────────────────────────────────────────┐│││
-│  │  │  │  CLAUDE.md (your project rules)          ││││
-│  │  │  └──────────────────────────────────────────┘│││
-│  │  └──────────────────────────────────────────────┘││
-│  └──────────────────────────────────────────────────┘│
-└─────────────────────────────────────────────────────┘
-Each layer solves what the inner layer cannot.
-```
-
-## Hooks: Turning Suggestions into Laws
-
-The hook system has two key chains:
-
-**Deliverable Gate** — Forces the agent to declare what it will produce before exploring:
-```
-UserPromptSubmit → deliverable-gate.sh
-→ "Before exploring, declare your deliverable in one line."
-```
-
-**Memory Chain** — Forces the agent to store learnings after every commit:
-```
-git commit detected
-→ memory-commit-flag.sh (creates flag)
-→ memory-gate.sh (blocks agent until memory is stored)
-→ memory-clear-flag.sh (clears flag after storage)
-```
-
-See [`hooks/README.md`](hooks/README.md) for details on all 8 hooks.
-
-## Memory: What to Store, What Not to Store
-
-**Store**: Decisions (and WHY), corrections, validated patterns, surprising findings.
-
-**Don't store**: Session logs, git history (use `git log`), debugging recipes, file paths that change.
-
-**Quality rule**: Before saving, ask — "Would a future session be measurably more efficient knowing this?" Store WHY, not WHAT.
-
-See [`memory/README.md`](memory/README.md) for the dual-system design.
-
-## Meta-Skills: Anti-Sycophancy by Design
-
-LLMs have a structural sycophancy problem (Anthropic ICLR 2024). "Please be strict" doesn't work — Snorkel AI found self-review accuracy drops from 98% to 57%.
-
-The solution is **Reviewer Constitution** — structural constraints injected into every review agent:
-- Forced dissent (must find N issues before ACCEPT)
-- Category diversity (issues must span ≥2 categories)
-- Evidence required (location + failure scenario + fix)
-- "Looks good" / "LGTM" banned
-
-All three meta-skills share this constitution via `skills/shared/`.
-
-| Skill | Solves | Key mechanism |
-|-------|--------|---------------|
-| `auto-explore` | "Agent searched once and stopped" | 5 phases, ≥3 rounds, cross-source verification |
-| `auto-debug` | "Agent grabbed first hypothesis" | ≥3 competing hypotheses, falsification-first |
-| `auto-workflow` | "Agent skipped thinking, went straight to coding" | 8 phases, Red Team gate before implementation |
-
-## nano-image-gen: Demo Skill
-
-Generates knowledge card illustrations (知识卡片) via Gemini API with an eval-driven feedback loop:
-
-```
-Generate → Read image → Score (8 dimensions, /40) → Diagnose → Fix prompt → Regenerate
-```
-
-Requires `GEMINI_API_KEY`. See [`skills/nano-image-gen/SKILL.md`](skills/nano-image-gen/SKILL.md).
-
-## Maturity Ladder: Where Are You?
-
-| Level | Name | Diagnostic Signal |
-|-------|------|-------------------|
-| L0→L1 | Instructions | You repeat the same setup every session |
-| L1→L2 | Constraints | Rules exist but agent violates 30% of them |
-| L2→L3 | Workflows | You keep giving the same instruction sequence |
-| L3→L4 | Delegation | Context polluted by mixed tasks |
-| L4→L5 | Governance | Platform-level agent infra |
-
-You don't need L5 on day one. Find your level, go up one step.
+Then merge `hooks/settings.json.example` into `~/.claude/settings.json` and restart Claude Code.
 
 ## License
 
