@@ -13,37 +13,15 @@ A production-tested harness system for [Claude Code](https://docs.anthropic.com/
 | **Meta-Skills** | 3 autonomous workflows + shared base + reviewer constitution | One-click research, debugging, and development with anti-sycophancy |
 | **nano-image-gen** | Knowledge card illustration generator | Demo skill: eval-driven image generation loop via Gemini API |
 
-## Quick Start (15 minutes)
-
-### 1. Install hooks (5 min)
+## Quick Start
 
 ```bash
-# Copy hook scripts
-cp hooks/*.sh ~/.claude/hooks/
-chmod +x ~/.claude/hooks/*.sh
-
-# Add hooks config to your settings.json
-# See hooks/settings.json.example for the full lifecycle mapping
+git clone https://github.com/zjh08177/agent-harness.git
+cd agent-harness
+bash install.sh
 ```
 
-### 2. Set up memory (5 min)
-
-```bash
-# Create memory directory for your project
-mkdir -p ~/.claude/projects/<your-project>/memory/
-cp memory/MEMORY.md.template ~/.claude/projects/<your-project>/memory/MEMORY.md
-```
-
-### 3. Install meta-skills (5 min)
-
-```bash
-# Copy skills to your Claude Code skills directory
-cp -r skills/shared ~/.claude/skills/
-cp -r skills/auto-workflow ~/.claude/skills/
-cp -r skills/auto-explore ~/.claude/skills/
-cp -r skills/auto-debug ~/.claude/skills/
-cp -r skills/nano-image-gen ~/.claude/skills/
-```
+Then merge `hooks/settings.json.example` into your `~/.claude/settings.json` and restart Claude Code.
 
 ## Architecture
 
