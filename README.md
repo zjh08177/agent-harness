@@ -133,12 +133,6 @@ Requires `GEMINI_API_KEY`. See [`skills/nano-image-gen/SKILL.md`](skills/nano-im
 
 You don't need L5 on day one. Find your level, go up one step.
 
-## Background
-
-This harness was built and battle-tested over 2+ months of daily Claude Code usage across a visual workflow editor and AI pipeline projects. The presentation ["模型不是瓶颈，环境才是"](docs/architecture.md) covers the theory in depth.
-
-Key insight: **Instructions are suggestions. Constraints are law. Workflows are compound interest.**
-
 ## License
 
 MIT
