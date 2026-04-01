@@ -1,0 +1,52 @@
+# CLAUDE.md Template
+
+> Customize this for your project. Keep under 200 lines. Agent compliance drops after that.
+
+## Project
+
+- **Name**: [Your project]
+- **Stack**: [Languages, frameworks, tools]
+- **Root**: [Absolute path to project root]
+
+## Directory Structure
+
+```
+[Your project tree here — focus on the parts agents need to know]
+```
+
+## Quick Commands
+
+```bash
+make dev       # Start development server
+make test      # Run all tests
+make lint      # Run linter
+```
+
+## Rules
+
+### MUST
+
+- [Critical rules that agents MUST follow]
+- Use `logger` for all logging, never `print()`
+- All new files must be TypeScript (.ts/.tsx)
+
+### NEVER
+
+- NEVER commit .env files or credentials
+- NEVER modify files outside the project root
+- NEVER skip tests before declaring completion
+
+## Code Conventions
+
+- [Naming conventions]
+- [File organization rules]
+- [Import order if it matters]
+
+## Common Mistakes
+
+- [Pattern → What goes wrong → How to fix]
+- [Pattern → What goes wrong → How to fix]
+
+## Memory Protocol
+
+After every `git commit`, save a memory update with the commit hash, summary, and WHY before responding.

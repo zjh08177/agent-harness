@@ -1,0 +1,144 @@
+# Agent Harness: Hooks, Memory & Meta-Skills for Claude Code
+
+> **The model is what thinks. The harness is what it thinks about.**
+
+A production-tested harness system for [Claude Code](https://docs.anthropic.com/en/docs/claude-code) that turns suggestions into laws, gives agents persistent memory, and encodes complete workflows as one-click skills.
+
+## What's in the box
+
+| Layer | What | Why |
+|-------|------|-----|
+| **Hooks** | 8 shell scripts + settings.json config | Turn CLAUDE.md rules into mechanically enforced constraints |
+| **Memory** | Dual-system template (auto-memory + MCP Memory) | Agent remembers decisions, corrections, and patterns across sessions |
+| **Meta-Skills** | 3 autonomous workflows + shared base + reviewer constitution | One-click research, debugging, and development with anti-sycophancy |
+| **nano-image-gen** | Knowledge card illustration generator | Demo skill: eval-driven image generation loop via Gemini API |
+
+## Quick Start (15 minutes)
+
+### 1. Install hooks (5 min)
+
+```bash
+# Copy hook scripts
+cp hooks/*.sh ~/.claude/hooks/
+chmod +x ~/.claude/hooks/*.sh
+
+# Add hooks config to your settings.json
+# See hooks/settings.json.example for the full lifecycle mapping
+```
+
+### 2. Set up memory (5 min)
+
+```bash
+# Create memory directory for your project
+mkdir -p ~/.claude/projects/<your-project>/memory/
+cp memory/MEMORY.md.template ~/.claude/projects/<your-project>/memory/MEMORY.md
+```
+
+### 3. Install meta-skills (5 min)
+
+```bash
+# Copy skills to your Claude Code skills directory
+cp -r skills/shared ~/.claude/skills/
+cp -r skills/auto-workflow ~/.claude/skills/
+cp -r skills/auto-explore ~/.claude/skills/
+cp -r skills/auto-debug ~/.claude/skills/
+cp -r skills/nano-image-gen ~/.claude/skills/
+```
+
+## Architecture
+
+```
+┌─────────────────────────────────────────────────────┐
+│  Meta-Skills (auto-workflow, auto-explore, auto-debug)│
+│  ┌──────────────────────────────────────────────────┐│
+│  │  Memory System (auto-memory + MCP Memory)        ││
+│  │  ┌──────────────────────────────────────────────┐││
+│  │  │  Hooks (deliverable-gate, memory-chain, ...)│││
+│  │  │  ┌──────────────────────────────────────────┐│││
+│  │  │  │  CLAUDE.md (your project rules)          ││││
+│  │  │  └──────────────────────────────────────────┘│││
+│  │  └──────────────────────────────────────────────┘││
+│  └──────────────────────────────────────────────────┘│
+└─────────────────────────────────────────────────────┘
+Each layer solves what the inner layer cannot.
+```
+
+## Hooks: Turning Suggestions into Laws
+
+The hook system has two key chains:
+
+**Deliverable Gate** — Forces the agent to declare what it will produce before exploring:
+```
+UserPromptSubmit → deliverable-gate.sh
+→ "Before exploring, declare your deliverable in one line."
+```
+
+**Memory Chain** — Forces the agent to store learnings after every commit:
+```
+git commit detected
+→ memory-commit-flag.sh (creates flag)
+→ memory-gate.sh (blocks agent until memory is stored)
+→ memory-clear-flag.sh (clears flag after storage)
+```
+
+See [`hooks/README.md`](hooks/README.md) for details on all 8 hooks.
+
+## Memory: What to Store, What Not to Store
+
+**Store**: Decisions (and WHY), corrections, validated patterns, surprising findings.
+
+**Don't store**: Session logs, git history (use `git log`), debugging recipes, file paths that change.
+
+**Quality rule**: Before saving, ask — "Would a future session be measurably more efficient knowing this?" Store WHY, not WHAT.
+
+See [`memory/README.md`](memory/README.md) for the dual-system design.
+
+## Meta-Skills: Anti-Sycophancy by Design
+
+LLMs have a structural sycophancy problem (Anthropic ICLR 2024). "Please be strict" doesn't work — Snorkel AI found self-review accuracy drops from 98% to 57%.
+
+The solution is **Reviewer Constitution** — structural constraints injected into every review agent:
+- Forced dissent (must find N issues before ACCEPT)
+- Category diversity (issues must span ≥2 categories)
+- Evidence required (location + failure scenario + fix)
+- "Looks good" / "LGTM" banned
+
+All three meta-skills share this constitution via `skills/shared/`.
+
+| Skill | Solves | Key mechanism |
+|-------|--------|---------------|
+| `auto-explore` | "Agent searched once and stopped" | 5 phases, ≥3 rounds, cross-source verification |
+| `auto-debug` | "Agent grabbed first hypothesis" | ≥3 competing hypotheses, falsification-first |
+| `auto-workflow` | "Agent skipped thinking, went straight to coding" | 8 phases, Red Team gate before implementation |
+
+## nano-image-gen: Demo Skill
+
+Generates knowledge card illustrations (知识卡片) via Gemini API with an eval-driven feedback loop:
+
+```
+Generate → Read image → Score (8 dimensions, /40) → Diagnose → Fix prompt → Regenerate
+```
+
+Requires `GEMINI_API_KEY`. See [`skills/nano-image-gen/SKILL.md`](skills/nano-image-gen/SKILL.md).
+
+## Maturity Ladder: Where Are You?
+
+| Level | Name | Diagnostic Signal |
+|-------|------|-------------------|
+| L0→L1 | Instructions | You repeat the same setup every session |
+| L1→L2 | Constraints | Rules exist but agent violates 30% of them |
+| L2→L3 | Workflows | You keep giving the same instruction sequence |
+| L3→L4 | Delegation | Context polluted by mixed tasks |
+| L4→L5 | Governance | Platform-level agent infra |
+
+You don't need L5 on day one. Find your level, go up one step.
+
+## Background
+
+This harness was built and battle-tested over 2+ months of daily Claude Code usage across a visual workflow editor and AI pipeline projects. The presentation ["模型不是瓶颈，环境才是"](docs/architecture.md) covers the theory in depth.
+
+Key insight: **Instructions are suggestions. Constraints are law. Workflows are compound interest.**
+
+## License
+
+MIT

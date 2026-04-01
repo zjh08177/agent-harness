@@ -1,0 +1,16 @@
+# Auto Memory — [Project Name]
+
+## Memory System
+- Primary: **Auto-memory files** (this directory). Always loaded.
+- Secondary: **MCP Memory** (`mcp__memory` tools) — for cross-project search only.
+- Dynamic state (branch, commits): use `git status` / `git log` — NOT stored here.
+
+## User
+
+## Feedback
+
+## Project
+
+## Reference
+
+## Gotchas
