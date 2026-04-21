@@ -1,0 +1,1 @@
+/Users/bytedance/.agents/skills/gstack/design-shotgun/SKILL.md

@@ -1,0 +1,124 @@
+{
+  "version": 1,
+  "portfolios": {
+    "robinhood": {
+      "name": "Robinhood",
+      "created_at": "2026-03-29T00:44:11.624258",
+      "updated_at": "2026-03-29T00:49:40.720607",
+      "assets": [
+        {
+          "ticker": "CAI",
+          "type": "stock",
+          "quantity": 1.0,
+          "cost_basis": 0.0,
+          "added_at": "2026-03-29T00:48:56.439195"
+        },
+        {
+          "ticker": "WRD",
+          "type": "stock",
+          "quantity": 1.0,
+          "cost_basis": 0.0,
+          "added_at": "2026-03-29T00:48:59.322160"
+        },
+        {
+          "ticker": "PONY",
+          "type": "stock",
+          "quantity": 1.0,
+          "cost_basis": 0.0,
+          "added_at": "2026-03-29T00:49:02.279981"
+        },
+        {
+          "ticker": "CRDO",
+          "type": "stock",
+          "quantity": 1.0,
+          "cost_basis": 0.0,
+          "added_at": "2026-03-29T00:49:05.337704"
+        },
+        {
+          "ticker": "XLE",
+          "type": "stock",
+          "quantity": 1.0,
+          "cost_basis": 0.0,
+          "added_at": "2026-03-29T00:49:08.149966"
+        },
+        {
+          "ticker": "GOOG",
+          "type": "stock",
+          "quantity": 1.0,
+          "cost_basis": 0.0,
+          "added_at": "2026-03-29T00:49:11.055243"
+        },
+        {
+          "ticker": "HOOD",
+          "type": "stock",
+          "quantity": 1.0,
+          "cost_basis": 0.0,
+          "added_at": "2026-03-29T00:49:14.050697"
+        },
+        {
+          "ticker": "KLAR",
+          "type": "stock",
+          "quantity": 1.0,
+          "cost_basis": 0.0,
+          "added_at": "2026-03-29T00:49:16.976592"
+        },
+        {
+          "ticker": "FIGR",
+          "type": "stock",
+          "quantity": 1.0,
+          "cost_basis": 0.0,
+          "added_at": "2026-03-29T00:49:19.939067"
+        },
+        {
+          "ticker": "AVGO",
+          "type": "stock",
+          "quantity": 1.0,
+          "cost_basis": 0.0,
+          "added_at": "2026-03-29T00:49:23.425124"
+        },
+        {
+          "ticker": "RKLB",
+          "type": "stock",
+          "quantity": 1.0,
+          "cost_basis": 0.0,
+          "added_at": "2026-03-29T00:49:26.324452"
+        },
+        {
+          "ticker": "XLF",
+          "type": "stock",
+          "quantity": 1.0,
+          "cost_basis": 0.0,
+          "added_at": "2026-03-29T00:49:29.310082"
+        },
+        {
+          "ticker": "XOM",
+          "type": "stock",
+          "quantity": 1.0,
+          "cost_basis": 0.0,
+          "added_at": "2026-03-29T00:49:32.228937"
+        },
+        {
+          "ticker": "SOXL",
+          "type": "stock",
+          "quantity": 1.0,
+          "cost_basis": 0.0,
+          "added_at": "2026-03-29T00:49:35.015430"
+        },
+        {
+          "ticker": "TSLA",
+          "type": "stock",
+          "quantity": 1.0,
+          "cost_basis": 0.0,
+          "added_at": "2026-03-29T00:49:37.881475"
+        },
+        {
+          "ticker": "META",
+          "type": "stock",
+          "quantity": 1.0,
+          "cost_basis": 0.0,
+          "added_at": "2026-03-29T00:49:40.720607"
+        }
+      ]
+    }
+  }
+}

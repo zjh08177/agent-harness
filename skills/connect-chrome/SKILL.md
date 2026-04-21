@@ -1,0 +1,1 @@
+/Users/bytedance/.agents/skills/gstack/connect-chrome/SKILL.md

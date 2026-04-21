@@ -2,9 +2,9 @@
 
 Reference this file from auto-workflow, auto-explore, auto-debug instead of duplicating.
 
-## Phase 0: Dependency Check (MANDATORY — runs before any phase)
+## Phase 0: Dependency Check (MANDATORY)
 
-Before starting, check which optional skill repos are installed locally. Run this silently:
+Run silently before any phase:
 
 ```bash
 missing=""
@@ -14,61 +14,111 @@ done
 [ -n "$missing" ] && echo "MISSING:$missing" || echo "ALL_PRESENT"
 ```
 
-**If any are missing**, inform the user ONCE at the start:
+**If missing**, inform user ONCE at start:
 
 > ⚠️ **Optional skills not found:**`{list}`
 >
-> The meta-skills use these for sub-agent orchestration (code review, test analysis, planning).
-> Install with: `npx skills add {repo} -g`
+> Install: `npx skills add {repo} -g`
 >
-> Proceeding in **degraded mode** — the lead agent will handle these phases inline instead of delegating to specialized sub-agents.
+> Proceeding in **degraded mode** — lead handles these phases inline.
 
-**Degraded mode rules:**
-- Missing `feature-dev` → Lead agent does code exploration, architecture review, and code review directly (no sub-agents for these roles)
-- Missing `superpowers` → Skip structured planning templates; use inline task lists instead
-- Missing `planning-with-files` → Write planning files with `Write` tool directly instead of the skill
-- Missing `pr-review-toolkit` → Skip dedicated test coverage analysis; lead agent reviews tests inline
-- Missing `code-simplifier` → Skip post-implementation simplification pass
+**Degraded mode:**
+- Missing `feature-dev` → Lead handles code exploration, architecture review, code review directly
+- Missing `superpowers` → Skip structured planning templates; inline task lists
+- Missing `planning-with-files` → Use `Write` tool directly
+- Missing `pr-review-toolkit` → Skip dedicated test coverage analysis
+- Missing `code-simplifier` → Skip post-impl simplification pass
 
-The skill MUST still complete all phases — degraded mode changes WHO does the work (lead vs sub-agent), not WHETHER the work happens.
+All phases MUST complete. Degraded mode changes WHO, not WHETHER.
 
 ## Team Setup (MANDATORY)
 
-1. Use `TeamCreate` to create a team for this session
-2. Create tasks via `TaskCreate`
-3. Spawn teammates via `Agent` tool with `team_name`, `name`, and `isolation: "worktree"` — ALL teammates MUST run in worktrees
-4. Assign tasks via `TaskUpdate` with `owner` set to teammate name
-5. Shut down teammates via `SendMessage` with `message: {type: "shutdown_request"}` when done
-6. Clean up team via `TeamDelete` after all teammates confirm shutdown
+1. `TeamCreate` for this session
+2. `TaskCreate` for tasks
+3. Spawn via `Agent` with `team_name`, `name`, `isolation: "worktree"` — ALL teammates in worktrees
+4. Assign via `TaskUpdate` with `owner` = teammate name
+5. Shutdown via `SendMessage` `{type: "shutdown_request"}`
+6. `TeamDelete` after confirmed shutdowns
 
 ## Branch Safety (MANDATORY)
 
 - ALL spawned agents MUST use `isolation: "worktree"` — no exceptions
-- Agents MUST NOT merge, rebase, push, or auto-integrate their worktree branches
-- If an agent produces changes, report the worktree branch name for manual review
-- The lead agent (you) operates on the working branch — only the lead writes final deliverables
+- Agents MUST NOT merge, rebase, push, or auto-integrate worktree branches
+- Agents report worktree branch name; lead reviews manually
+- Only the lead writes final deliverables to the working branch
 
 ## Execution Rules
 
-- Auto-approve, execute, and complete the entire flow without stopping
-- Exceptions: Phase 1 Red Team HALT (auto-workflow only), and any phase explicitly configured with `gate=<phase-name>`
-- Do not stop before everything is fully complete
+- Auto-approve, execute, complete the entire flow without stopping
+- Exceptions: Phase 1 Red Team HALT (auto-workflow only); any phase with `gate=<phase-name>`
+- Do not stop before fully complete
+
+## Autonomous Decisions (MANDATORY)
+
+When the work has a defensible single answer, **make the decision** and state rationale in one line. Present a menu ONLY when the decision is genuinely 50/50 OR requires info outside your reach. If unsure, default to autonomy — user can redirect faster than they can pick.
+
+## Ad-Hoc Review Dispatch (MANDATORY)
+
+If you dispatch ≥2 review agents via `Agent` tool on the SAME artifact **without invoking `/auto-workflow`**, you MUST:
+
+1. Include the Reviewer Constitution verbatim in every agent's prompt
+2. Treat ad-hoc dispatches as review rounds — round-count tracking + Post-Round-3 Gate apply
+3. Declare the round header (`REVIEW ROUND N OF <artifact>`) in user-facing text before dispatch
+
+Revision labels (r7 → r8 → r9) do NOT reset round count. Resets only on material scope change (Constitution § Round Header).
+
+Rationale: Constitution convergence criteria only bind reviewers who receive them. Bypassing via ad-hoc `Agent` dispatch historically (2026-04-20, control-flow) led to 9-round loops where convergence criteria were never evaluated.
+
+## Scope Lock (MANDATORY)
+
+Before Round 1 of any review cycle, lead declares:
+1. **In-scope**: explicit list
+2. **Out-of-scope**: explicit list, especially common expansions the user might request mid-cycle
+3. **Scope owner** (user or lead) and any pre-approved expansion triggers
+
+Mid-review scope changes:
+- **Narrowing** (explicitly declared out-of-scope) → no reset; note in round log
+- **Expansion** (new in-scope item OR new HARD constraint) → **round counter resets to R0**, produce `scope-delta-<topic>.md` in vault project folder:
+  - What expanded
+  - Which prior-round findings are invalidated
+  - Which are still valid under new scope
+- Acknowledge the reset with user before continuing
+
+Rationale: without reset, expanded scope re-litigates prior rounds under new criteria, inflating round count as "slow convergence." Empirical: control-flow r5 (ComfyUI ecosystem) and r7→r8 (BC HARD) each caused this.
+
+## Research Gate (MANDATORY)
+
+If any reviewer raises a **scope-level question** (not a spec-gap), lead MUST:
+
+1. **Pause** the review cycle — do NOT dispatch next round
+2. **Classify**:
+   - Internal (codebase / existing pattern / ownership) → single `feature-dev:code-explorer` agent
+   - External (community convention / ecosystem / CVE) → invoke `/auto-explore` (full, not light) with the specific question
+3. **Resume** review with research findings in context
+
+Scope-level signals:
+- "Is this the right approach vs community convention X?"
+- "Does ecosystem Y have a different primitive?"
+- "Is this premise correct?"
+- Any REJECT citing "assumption not validated"
+
+Rationale: scope questions don't close in review rounds. Control-flow r5 spent a full round partially resolving "should we align with ComfyUI?" before /auto-explore ran in r6. One upfront research pass would have saved r5.
 
 ## Planning Files
 
-Create persistent planning files in the **vault project folder** using `planning-with-files`:
-1. `task-plan.md` — phases matching the skill's workflow
+Create persistent planning files in vault project folder using `planning-with-files`:
+1. `task-plan.md` — phases matching skill's workflow
 2. `findings.md` — discoveries, feedback, hypotheses
 3. `progress.md` — session log
 
-If `obsidian-cli` is unavailable, fall back to `Write` tool at `[project-dir]/Docs/`.
+Fallback if `obsidian-cli` unavailable: `Write` tool at `[project-dir]/Docs/`.
 
-**Note**: Each skill defines its own `light` mode with skill-specific phase-skipping rules. Check the skill's Configuration section.
+Each skill defines its own `light` mode with skill-specific phase-skipping rules.
 
 ## Self-Review (MANDATORY before memory storage)
 
-Answer these three questions, then store as MCP memory observations:
-1. **Root approach/decision** — key architectural/design choice or methodology (one line)
+Answer, then store as MCP memory observations:
+1. **Root approach** — key architectural/design choice (one line)
 2. **Surprise** — what was unexpected (one line)
 3. **Retrospective** — what would you do differently (one line)
 
@@ -78,22 +128,25 @@ Review `findings.md`. Promote valuable discoveries to permanent vault docs via `
 
 ## Team Cleanup (MANDATORY — final step)
 
-1. Send `{type: "shutdown_request"}` via `SendMessage` to each teammate individually
-2. Wait up to 60 seconds per teammate for shutdown confirmation. If unconfirmed, proceed anyway and note it.
-3. Clean up the team via `TeamDelete`
+1. `SendMessage` `{type: "shutdown_request"}` to each teammate
+2. Wait up to 60s per teammate. If unconfirmed, proceed and note it.
+3. `TeamDelete`
 
 ## Fault Tolerance
 
-**Agent failures:**
-- If a spawned agent returns no output, crashes, or times out (no response within 5 minutes): log the failure in `findings.md`, re-spawn once with the same task
-- If it fails again, note the coverage gap and proceed — do not block the workflow
-- If a response is syntactically valid but missing fields (e.g., no FAILURE_MODES), accept what's present and note the gap
+**Agent idles / crashes / timeouts (>5min no response):**
+
+1. Log failure in `findings.md`, re-spawn ONCE with same task
+2. If re-spawn also fails AND this leaves <N/2 reviewers → **halt round**, log coverage-gap, do NOT compute convergence, do NOT proceed without user sign-off
+3. If ≥N/2 reviewers delivered → proceed BUT tag round as "partial-coverage; re-run required before closure"
+
+Silent-proceed is forbidden. Rationale: absorbs coverage gaps into next round, extending cycle. Control-flow r5 proceeded with 3-of-6 per old rule; same concerns resurfaced in r6/r7.
 
 **Reviewer format violations (precedence order):**
-1. If the response contains `VERDICT:` on its own line → parse normally
-2. If no `VERDICT:` line but the response is >20 words → extract any blocking issues mentioned FIRST, then infer verdict from overall tone (blocking language = REJECT, approving = ACCEPT_WITH_WARNINGS). Note the format violation.
-3. If no `VERDICT:` line and response is ≤20 words or empty → treat as PARTIAL
+1. Response contains `VERDICT:` on its own line → parse normally
+2. No `VERDICT:` but response >20 words → extract blocking issues FIRST, then infer verdict from tone (blocking lang = REJECT, approving = AWW). Note format violation.
+3. No `VERDICT:` and response ≤20 words / empty → treat as PARTIAL
 
-Always add a format reminder to the reviewer prompt footer: "Your response MUST begin with `VERDICT:` on its own line."
+Always add to reviewer prompt footer: "Your response MUST begin with `VERDICT:` on its own line."
 
-**MCP memory fallback**: If `mcp__memory__add_observations` fails, log observations to `findings.md` instead. Do not block the workflow.
+**MCP memory fallback**: If `mcp__memory__add_observations` fails, log to `findings.md`. Do not block workflow.

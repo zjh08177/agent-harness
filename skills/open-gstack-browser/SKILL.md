@@ -1,0 +1,1 @@
+/Users/bytedance/.agents/skills/gstack/open-gstack-browser/SKILL.md
