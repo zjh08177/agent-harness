@@ -1,0 +1,71 @@
+{
+  "version": "1.0.0",
+  "description": "Preset styles for architecture diagram generation",
+  "presets": [
+    {
+      "id": "minimalist",
+      "name": "Minimalist Professional",
+      "prompt": "minimalist style and professional building block diagram",
+      "aspect_ratio": "3:4",
+      "recommended": true,
+      "tags": ["clean", "professional", "simple"]
+    },
+    {
+      "id": "modern-colorful",
+      "name": "Modern Colorful",
+      "prompt": "modern and colorful architecture diagram with gradient backgrounds",
+      "aspect_ratio": "3:4",
+      "recommended": false,
+      "tags": ["vibrant", "modern", "gradient"]
+    },
+    {
+      "id": "dark-neon",
+      "name": "Dark Mode Neon",
+      "prompt": "dark mode with neon accents technical architecture diagram",
+      "aspect_ratio": "3:4",
+      "recommended": false,
+      "tags": ["dark", "neon", "tech"]
+    },
+    {
+      "id": "blueprint",
+      "name": "Blueprint Technical",
+      "prompt": "blueprint technical drawing style architecture diagram with grid lines",
+      "aspect_ratio": "3:4",
+      "recommended": false,
+      "tags": ["technical", "engineering", "grid"]
+    },
+    {
+      "id": "corporate",
+      "name": "Corporate Presentation",
+      "prompt": "corporate presentation style architecture diagram, clean and formal",
+      "aspect_ratio": "16:9",
+      "recommended": false,
+      "tags": ["formal", "presentation", "business"]
+    },
+    {
+      "id": "hand-drawn",
+      "name": "Hand-drawn Sketch",
+      "prompt": "hand-drawn sketch style architecture diagram with pencil texture",
+      "aspect_ratio": "3:4",
+      "recommended": false,
+      "tags": ["sketch", "casual", "creative"]
+    },
+    {
+      "id": "isometric",
+      "name": "Isometric 3D",
+      "prompt": "isometric 3D style architecture diagram with depth and shadows",
+      "aspect_ratio": "1:1",
+      "recommended": false,
+      "tags": ["3d", "isometric", "depth"]
+    },
+    {
+      "id": "glassmorphism",
+      "name": "Glassmorphism",
+      "prompt": "glassmorphism style architecture diagram with frosted glass effects and blur",
+      "aspect_ratio": "3:4",
+      "recommended": false,
+      "tags": ["glass", "modern", "blur"]
+    }
+  ],
+  "custom_presets": []
+}

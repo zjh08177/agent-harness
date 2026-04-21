@@ -9,9 +9,9 @@ HAS_SKILL=$(echo "${CLAUDE_SKILL:-}" | grep -qiE "auto-(workflow|research|debug)
 
 if [ "$HAS_PLAN" = "1" ] || [ "$HAS_SKILL" = "1" ]; then
   echo "[doc-convention] Active planning session detected. Vault docs:"
-  echo "  • Use obsidian-cli + vault templates (never Write directly)"
+  echo "  • Content → Write tool (templates from 99-System/Templates/, substitute {{title}}/{{date}})"
+  echo "  • Metadata → obsidian-cli fm/move/open only. NEVER --content (truncates at &)."
   echo "  • Route: direction/product/<project>/ (flat, prefix-organized)"
   echo "  • Mandatory trio: erd-, tech-solution-, impl-plan-"
-  echo "  • Working files (task-plan.md, findings.md, progress.md) in same vault folder"
-  echo "  • .planning-dir in CWD points to vault path"
+  echo "  • Full rule: ~/.claude/CLAUDE.md § Vault Doc Creation"
 fi

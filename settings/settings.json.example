@@ -1,0 +1,332 @@
+{
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  },
+  "permissions": {
+    "allow": [
+      "Bash(git clone:*)",
+      "Bash(grep:*)",
+      "mcp__mcp-sso-jwt-token__get_lark_access_token",
+      "mcp__lark_docs__get_lark_doc_content",
+      "Bash(ls:*)",
+      "WebFetch(domain:bytedance.larkoffice.com)",
+      "mcp__feishu__*",
+      "Read(//Users/bytedance/.claude/**)",
+      "Bash(__NEW_LINE_5a2d2f9a6d524c1f__ echo:*)",
+      "Bash(python3 -c \":*)",
+      "Bash(git rm:*)",
+      "Bash(python -c \"import server.storyboard.session_artifacts; print\\(''import OK''\\)\")",
+      "Bash(python3:*)",
+      "Bash(git add:*)",
+      "mcp__memory__search_nodes",
+      "Bash(cp ~/.zshrc.backup ~/.zshrc)",
+      "Bash(chflags uchg:*)",
+      "Bash(lark-cli wiki:*)",
+      "Bash(lark-cli docx:*)",
+      "Bash(npx playwright:*)",
+      "Skill(browse)",
+      "WebFetch(domain:kentcdodds.com)",
+      "WebFetch(domain:martinfowler.com)",
+      "WebSearch"
+    ],
+    "defaultMode": "default"
+  },
+  "model": "opus[1m]",
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "osascript -e 'display notification \"Processing your request...\" with title \"Claude Code\"'"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/memory-gate.sh"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/doc-convention-guard.sh"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/deliverable-gate.sh"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/work-log-gate.sh"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/env-bootstrap.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/obsidian-cli-guard.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "mcp__(playwright|plugin_playwright_playwright)__browser_.*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"Playwright MCP blocked. Use gstack /browse ($B commands) instead. Setup: /setup-browser-cookies\"}}'"
+          }
+        ]
+      },
+      {
+        "matcher": "mcp__plugin_global-live_lark-docs__.*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"plugin:global-live:lark-docs disabled globally. Use lark-cli skills (lark-doc, lark-base, etc.) instead.\"}}'"
+          }
+        ]
+      },
+      {
+        "matcher": "Agent",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/drift-precheck.sh"
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "osascript -e 'display notification \"Waiting for your input\" with title \"Claude Code\" sound name \"Ping\"'"
+          }
+        ]
+      }
+    ],
+    "PermissionRequest": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "osascript -e 'display notification \"Confirmation required\" with title \"Claude Code\" sound name \"Glass\"'"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "TodoWrite",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/auto_commit.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/memory-commit-flag.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "mcp__memory__add_observations",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/memory-clear-flag.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/memory-clear-flag.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "Agent",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/agent-budget.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash|Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/work-capture.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/test-label-guard.sh"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/caveman-inject.sh"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/memory-update-check.sh"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "osascript -e 'display notification \"Task completed!\" with title \"Claude Code\" sound name \"Hero\"'"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "rm -f /tmp/.claude-session-started /tmp/.claude-agent-count"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/findings-promote-check.sh"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/work-session-end.sh"
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "ccstatusline"
+  },
+  "enabledPlugins": {
+    "context7@claude-plugins-official": true,
+    "context-engineering-fundamentals@context-engineering-marketplace": true,
+    "agent-architecture@context-engineering-marketplace": true,
+    "agent-evaluation@context-engineering-marketplace": true,
+    "agent-development@context-engineering-marketplace": true,
+    "cognitive-architecture@context-engineering-marketplace": true,
+    "ralph-wiggum@claude-code-plugins": true,
+    "swift-lsp@claude-plugins-official": true,
+    "obsidian@obsidian-skills": true,
+    "sde@tiktok-ios-plugins-marketplace": false,
+    "creation-template@tiktok-ios-plugins-marketplace": true,
+    "knowledgebase@tiktok-ios-plugins-marketplace": true,
+    "studio-phototext@tiktok-ios-plugins-marketplace": true,
+    "tiktok-infra@tiktok-ios-plugins-marketplace": false,
+    "tiktok-social-fi@tiktok-ios-plugins-marketplace": false,
+    "tiktok-social-im@tiktok-ios-plugins-marketplace": false,
+    "pr-review-toolkit@claude-plugins-official": true,
+    "superpowers@claude-plugins-official": true,
+    "clangd-lsp@claude-plugins-official": true,
+    "code-review@claude-plugins-official": true,
+    "github@claude-plugins-official": true,
+    "ralph-loop@claude-plugins-official": true,
+    "feature-dev@claude-plugins-official": true,
+    "code-simplifier@claude-plugins-official": true,
+    "playwright@claude-plugins-official": true,
+    "commit-commands@claude-plugins-official": true,
+    "agent-sdk-dev@claude-plugins-official": true,
+    "claude-md-management@claude-plugins-official": true,
+    "hookify@claude-plugins-official": true,
+    "gitlab@claude-plugins-official": true,
+    "pua@pua-skills": true,
+    "documentation-generator@claude-code-templates": true,
+    "claude-mem@thedotmack": false,
+    "agent-sdk-dev@claude-code-plugins": true,
+    "code-review@claude-code-plugins": true,
+    "hookify@claude-code-plugins": true,
+    "learning-output-style@claude-code-plugins": true,
+    "explanatory-output-style@claude-code-plugins": true,
+    "auto-tracking@ai-metrics": true,
+    "codex@openai-codex": true
+  },
+  "extraKnownMarketplaces": {
+    "pua-skills": {
+      "source": {
+        "source": "github",
+        "repo": "tanweai/pua"
+      }
+    },
+    "ai-metrics": {
+      "source": {
+        "source": "git",
+        "url": "https://code.byted.org/tiktok/third-party-ai-coding-hooks.git"
+      }
+    },
+    "openai-codex": {
+      "source": {
+        "source": "github",
+        "repo": "openai/codex-plugin-cc"
+      }
+    }
+  },
+  "effortLevel": "high",
+  "skipDangerousModePermissionPrompt": true,
+  "voiceEnabled": false
+}

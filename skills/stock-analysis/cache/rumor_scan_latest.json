@@ -1,0 +1,211 @@
+{
+  "timestamp": "2026-03-28T06:23:00.893948+00:00",
+  "rumors": [
+    {
+      "source": "google_news",
+      "type": "news_rumor",
+      "title": "As railroad merger rumors swirl, CSX CEO says working with peers is the best way to boost value - cnbc.com",
+      "link": "https://news.google.com/rss/articles/CBMizAFBVV95cUxQUldUVGpXWmZ6WHRJLWlhWmFZdGlrUVFCRTJCSUxTbVdVR1VuYVJCeDhJclRqX2FPM1plVzNidHItN3lRYXpObDQwVkcxb3RoUXdlMjdEU3FtSzlZQ3hUQ3ZsY3dubkNMSWFkQUpUTlNWQXhBVkp1anVUdGVSSlhRMGtUMWt0dVpTS05DZFNnbUxOSGVuQ3l3U052dTMzaDBrclNDNlZUeXFEVy1GdnhhRlIyaXRKUHdmcGNtT3JVNkVjMjBWbXc3dW1CVkPSAdIBQVVfeXFMUHJmZUhvVE5VT0k4bEJmZVIxTlJYSmZJLXJTam5iZVVTYlUtelRVM2FEeUJBdWluaVZDR3E4aG1PeGRSN1V5UWJlbFd4MTBRY3BtWnBwUlMxcEZvbWFSdWR0b3FtbUVDN3QyT0sySW5fVEhfdHBvUndTamN2WFdVamk4WWF5VnRrYkdzNkZsOFlKV3BRTGo5b1U5RkRIUC0xaF94TElBVHItcGM5d0hVVEdRVU53WkJRcDF2ZUJPTkppNWJfX1JCbDNaT2FfYkdUZjRB?oc=5",
+      "date": "Wed, 27 Aug 2025 07:00:00 GMT",
+      "query": "merger acquisition rumor",
+      "score": 7,
+      "symbols": []
+    },
+    {
+      "source": "google_news",
+      "type": "news_rumor",
+      "title": "Rumor: Apple May Make A Bold And Expensive AI Acquisition - bgr.com",
+      "link": "https://news.google.com/rss/articles/CBMiigFBVV95cUxOcWFfUHBBYnktYmpUNG9razl1YTJIazFJaE1RTXE3YUZWT0hROUFrSmhsWDlKSFM0eFhoa2xLS01VY2RvcEhscllOSDlhZFBOUmZpa0FjZjZrYWNTZHRWYUNOVmVneUVjNnpCd29RS0NVcWcyYkpmNktEdW9jdUZZTlQ2cFU2bjdjYXc?oc=5",
+      "date": "Mon, 23 Jun 2025 07:00:00 GMT",
+      "query": "merger acquisition rumor",
+      "score": 7,
+      "symbols": [
+        "AAPL"
+      ]
+    },
+    {
+      "source": "google_news",
+      "type": "news_rumor",
+      "title": "SA analyst upgrades/downgrades: DIS, SNDK, SJM, OWL (SP500:) (DIS:NYSE) - Seeking Alpha",
+      "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxOVTFmekxIalFXS0VudHdmaWlZZGo0ZXl1LVlsTVZVQWNtWUNvSjZYR3IzUnRRZGpCX2dXVEZtSUJDNGNrYW1rejFYRndjSEx1VEF3OVVBZEdWNk85cG9EY2RwYXIxWE9PYlgzRGlzd0dqOGpzbUFUMlZjcHk4MU5DVWZSWUZVUlZmM3BVVW53?oc=5",
+      "date": "Fri, 27 Mar 2026 14:15:15 GMT",
+      "query": "analyst upgrade stock",
+      "score": 6,
+      "symbols": []
+    },
+    {
+      "source": "google_news",
+      "type": "news_rumor",
+      "title": "Jefferies Rises Premarket on Report of Potential Takeover Bid - WSJ",
+      "link": "https://news.google.com/rss/articles/CBMisANBVV95cUxQQkJRcXUtOXMxbTFEMTVxS2NjaXcxaEVxU3dhYWh2Y0JSTHkxV0ZfSUF1MkpvNkdWNFhDUWJHZU5Wb3ZXY29pY0RHalFoTzhqN1NzbC1KNm00clJndnByWDdqQm1ERUhKeklTZk5Pa3Yxc1hhOHhhRWkxYklWdVpMdVkwRTlrS0hsQnU0QUV2b3YwTGJFVUNPaU1PVkV3TENvTDB0eUFyUE9ORTJSSDBHVkZ2SzRiekV2YUp3MDQ1TE5RNHlINGJKSWNQeGotNnhnYjRPOWFhWVlxLU1LUlJ5ZVR4emtud3ZVNzFoZnl6U3IycXpsYkZMNEN6TWtUSG14TGo1cU5XenE2N01ScTllZFlCZXB0WDA0UXBjNFlRdW5CQVhYNV9nNU5CbUVIVHo5WlB0NFlqbWNPTVlLTi14ak5RT0twYkdtYkc4bHZtS0h4eUFtYjV3amtEOC1EQ2FLSExmVk1SRGtSbkREbDlNeTJoMDBmaHQxUUVzQmhndHRxTENDMjdKZzBDeTQ3cVM1dkpaVk1PdDNCd1VSQTdGZWdMLWNOb0o0V1p3YkNYSFI?oc=5",
+      "date": "Tue, 24 Mar 2026 12:12:00 GMT",
+      "query": "takeover bid company",
+      "score": 5,
+      "symbols": []
+    },
+    {
+      "source": "google_news",
+      "type": "news_rumor",
+      "title": "Recordati Confirms CVC\u2019s Non-Binding Interest in Potential Takeover Bid - TipRanks",
+      "link": "https://news.google.com/rss/articles/CBMivwFBVV95cUxOcXF2NU4xY2YxNVlfelVPd29mM0F1NWJBVm9FR0FNWTRmVjMyZndhVDd5VWY5TFlvYnAtWGx2dm9PWnZsM25DQThYUGROS2xwSXdraVZveWcyNUVDM3lDWUhXZ0F4YTkzckVSQkw3aDlKbWpNZzdsNEUxMW5pVlBWZ2VWWjR0S21LVlhPUmh6cHRWbFRza3pQUkJXZmZLbFhXcXU0SXdIRDFiRGI4b2hxQkxhWDRfYm5rVHA2UDBDcw?oc=5",
+      "date": "Thu, 26 Mar 2026 13:56:40 GMT",
+      "query": "takeover bid company",
+      "score": 5,
+      "symbols": []
+    },
+    {
+      "source": "google_news",
+      "type": "news_rumor",
+      "title": "Janus Henderson clients, staff push to reject Victory Capital's takeover bid, WSJ reports - reuters.com",
+      "link": "https://news.google.com/rss/articles/CBMivAFBVV95cUxOcWZfeHNBT1dZTmdYWFM3NXFIQnZfbDVjX3dlaUZnejZkT00wdHBGNG55TW5UN2o2TkVDVmYzWFdOYjVGMGFlcW5XNEItcDVpWl9EUjdwVThWaVBzdHRPWkxPNWZSVk9FWUkzQTFzNzg3N0x1VC1FenBPbHlkUVU3OTdVTnRMbDc4aDAtSjdjSjNocWZzbVgxV0FHVVRqM0hHTERHUldWcnl0TldkQ0VFbjI0WTFsdHAzRVQzYw?oc=5",
+      "date": "Wed, 18 Mar 2026 07:00:00 GMT",
+      "query": "takeover bid company",
+      "score": 5,
+      "symbols": []
+    },
+    {
+      "source": "google_news",
+      "type": "news_rumor",
+      "title": "Recordati says it\u2019s received a $12B+ takeover bid - Endpoints News",
+      "link": "https://news.google.com/rss/articles/CBMiekFVX3lxTE82WnFaemxFYldmbnpBeEk0eDR2MlJWUjNvSkJ4ZG43Sk5ybENKSlhOdnFjdVNpVjdGeGJTSm1LYzZzOHUtR3hvbzhsSFIwVWFmZF95UWw1LTRxdkowcGtLWEpKUU9CelJEc3R0Nlo2LXUxbHN5a3JtMnpR?oc=5",
+      "date": "Thu, 26 Mar 2026 17:06:00 GMT",
+      "query": "takeover bid company",
+      "score": 5,
+      "symbols": []
+    },
+    {
+      "source": "google_news",
+      "type": "news_rumor",
+      "title": "This F&G Insider Spent $100,000 Buying Shares Despite a Steep Stock Plunge. Is It Time for a Turnaround? - The Motley Fool",
+      "link": "https://news.google.com/rss/articles/CBMi7wFBVV95cUxPNHF3RGJnb2kxejAxell4cWN5S2J2UG12ampGUkdaMF9QQVpwSkV2VXdFY29NZDViaDBlMnNtZ2ZYLVdSXzdNYmJ5Y2RhQV9jVDV6OTJiZXdKM0R5VU5BR0lRTHMxUE16N3pzbWllUU1STi1pRTQzY0NUZHc2Zkk4Zk1wVTFvSjE5XzlNdVRDWWRBSEU5VDdRZm5tRUFZbUV1VG5GNFZxdkpCRmpzdG4yWDJic3hWYnZ2dnhhdXdZZk8tMGJxNl93cDJiZFBuUkVzM01HYUxjNWx4Z09mOHhRc1BMWXFnb0JoX2RkVFZ4dw?oc=5",
+      "date": "Sat, 28 Mar 2026 01:19:00 GMT",
+      "query": "insider buying stock",
+      "score": 4,
+      "symbols": []
+    },
+    {
+      "source": "google_news",
+      "type": "news_rumor",
+      "title": "Insider Purchase: Chief Executive Officer of $PLAY Buys 2,500 Shares - Quiver Quantitative",
+      "link": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxOY1RxRkpRV2RJRzRjTGhSNW5tQ3lja1Z3a3FpYXZQRGFqVC1qNjFaQlZRbG0yM1plNVdLaXZwTDZBRWwxdVp1eHpFbGJjNzZPNFhxOEUwQTUzdkZQVzQyaTBhX0xyQ19GQ3NTcmpYek53RktlTV9Hb1AxVEFDWGNCNWJUVHlsM21qMWJWWU5OOGJoOFlGUzZseXJoc05YZjNuTHB5aGNMM2hNQ2c?oc=5",
+      "date": "Sat, 28 Mar 2026 00:31:00 GMT",
+      "query": "insider buying stock",
+      "score": 4,
+      "symbols": [
+        "PLAY"
+      ]
+    },
+    {
+      "source": "google_news",
+      "type": "news_rumor",
+      "title": "Have Best Buy Insiders Been Selling Stock? - simplywall.st",
+      "link": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxNQVpMVWZBNUdmQ19od05vVkN1ZlBKTjNKTERVMjFNMFVuX3E4UVNyVXBFMExwSTVONXVRaXNUVEdSeUM3ZUpIMFNETzkyMkhlZGJPZ0hHTTZpck45dEIxMnlPYmlLdU9YQjZSMzRZWGlNc3E4UTIxX3hWTFlMVDhGRDNTVGNQcGxXeU04QVNaaEJGQ0MtREFSQ2RjVzZmX1RMcExUMk9FaTPSAa4BQVVfeXFMTnBwTUxRZ0l2QXA3R1c2ZGF3ZDlULTJ5VFhJdVdXb2NwV0l5cUNqVW11Y0xERDRRNUNPeWpZb1pyWjFfWGhRTHppUFhESWRJUzBIQzFaZnpGMjU4ZjBNXzhUN3h1WExxQkw1bjNBUFR1SXdKdW9DeHFZa0VSdmJfLVBOOFd1VjF3MGFJRUpHQXJVLW9DaFN6UGM4bGlqNFhueDRNdEdUSTA1aTNaTzdn?oc=5",
+      "date": "Fri, 27 Mar 2026 10:14:49 GMT",
+      "query": "insider buying stock",
+      "score": 4,
+      "symbols": []
+    },
+    {
+      "source": "google_news",
+      "type": "news_rumor",
+      "title": "Insider Buying: Todd Fruhbeis Acquires Shares of Star Equity Hol - GuruFocus",
+      "link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxOMTVhNnN1aEVoNlZURTNEU0FOMTdURmdYcTJkX2w1WFM1OS1fM0hPXzBPd0pvMnVTSmdTOXN2ZFFSSHVLYXFhTnhyREJZUDlYQmhuc1lnMWJzY0RYNTYzc2o4aU1WMjd6TjJCLWdPOW81QnpZUUNqZEwzSzB5T3c0UmFJY3Vpa3lFaE9Kc3QzY1VyQWZYVTBxU0E5b0hZa3d5NnFPdTFobzVmeG1rWUxZeHktQ2xKZkU?oc=5",
+      "date": "Sat, 28 Mar 2026 00:08:23 GMT",
+      "query": "insider buying stock",
+      "score": 4,
+      "symbols": []
+    },
+    {
+      "source": "google_news",
+      "type": "news_rumor",
+      "title": "Silver Standard Resources (NASDAQ:SSRM) Stock Price Up 4.8% on Analyst Upgrade - MarketBeat",
+      "link": "https://news.google.com/rss/articles/CBMixgFBVV95cUxPM2tsdGFybnhEUVBhMFFwb2V3Q2MyazJfM3JqX250akY1d1hFSk9obVJyd0tFMUpEOFJ1dERrMlJfUjBNZ2JpZlk0QWtsMXZ3QWMwaER2SVBKTExtQ0FkMUxqdkFGSTBQM2cteG1MSEtmeVI4ajlCX2tJazNIQU94Y05CR0ktZlk1ejY1bVljSHNOUWdXV3hWT29LbzNPYnRJOUxpalFVQUF2M2IwVDVsU2E5VmJJUnd5QzR4T2dVQUtJbk8zZ3c?oc=5",
+      "date": "Fri, 27 Mar 2026 17:24:05 GMT",
+      "query": "analyst upgrade stock",
+      "score": 3,
+      "symbols": []
+    },
+    {
+      "source": "google_news",
+      "type": "news_rumor",
+      "title": "Share Buyback and Analyst Upgrade Could Be A Game Changer For Baldwin Insurance Group (BWIN) - simplywall.st",
+      "link": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxORHhZWXBaOHJZR21sdkVqdHRsS3FUMVowZ05qdlNFSzg0eHhxRnp1VjVHQklKMXJ4Sklfbnpqa0xWeGRvSktWSEtkQmRHLVZ0bGtnNk05TEctYnRMcnJxZFQ4SzUyZWZQdDJ4NU80T0ZYdFZZTHlxd0xvbjBvcm1KeFJiYnl3RkRHZ1BmUFBRc1FNSHVZWVdqMnVNRGVHTHNtUU9FRnN1VWpaX2hnYXJ4RGNXcElvOEpRLTR6cmJ1RnREVENLSkNXekdYcTNtUjJuLUxYMjIxRzlYcXRoNktJUtIB4AFBVV95cUxORHhZWXBaOHJZR21sdkVqdHRsS3FUMVowZ05qdlNFSzg0eHhxRnp1VjVHQklKMXJ4Sklfbnpqa0xWeGRvSktWSEtkQmRHLVZ0bGtnNk05TEctYnRMcnJxZFQ4SzUyZWZQdDJ4NU80T0ZYdFZZTHlxd0xvbjBvcm1KeFJiYnl3RkRHZ1BmUFBRc1FNSHVZWVdqMnVNRGVHTHNtUU9FRnN1VWpaX2hnYXJ4RGNXcElvOEpRLTR6cmJ1RnREVENLSkNXekdYcTNtUjJuLUxYMjIxRzlYcXRoNktJUg?oc=5",
+      "date": "Fri, 27 Mar 2026 19:19:38 GMT",
+      "query": "analyst upgrade stock",
+      "score": 3,
+      "symbols": []
+    },
+    {
+      "source": "google_news",
+      "type": "news_rumor",
+      "title": "Analyst Optimism: MarketBeat's Most Upgraded Stocks of 2026 - Yahoo Finance",
+      "link": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxOakQ5MVdTNzB3d19DWnBBQi1PcHdVNmluaHdRVWtSNFdhc1FJSkJqdUpqMWtiZEJoWnlhc1VSeVY3TEljNFU5eHJlaWpPMGlDUFVUTHd0VlVhUnhzX25ucTE1eDlJSUl0WjhsbFpiampMMmxWcFhjLVFDUmMwRTNOVURxUFhYNEtSbXo1YnotZ2tiQUVkQUIyOHRQQW9fM1RwUXJsdmZvbTBIV0U?oc=5",
+      "date": "Thu, 26 Mar 2026 17:00:00 GMT",
+      "query": "analyst upgrade stock",
+      "score": 3,
+      "symbols": []
+    },
+    {
+      "source": "google_news",
+      "type": "news_rumor",
+      "title": "TripAdvisor (NASDAQ:TRIP) Shares Gap Up After Analyst Upgrade - MarketBeat",
+      "link": "https://news.google.com/rss/articles/CBMisgFBVV95cUxNZlVMYVd2TVhNTDVxeDQtUzk1S0xPU19NaXdfMGluaGM0cDlNLW1Icjd3S21CSFYyTUNGQVplaGFiODZBUnF5Q3d6cmt1S1JQTS1oamVDb1RWR1VTWkI2R01jUkI1ZWdIRTJ6SFNGLVczSjFLQUI2LVJQa19mZzBDRWhqSGRXdXZwLUhqMUdDZ1ZqNHAtcDZqNEl5TnktWnFtMFRiMTl4YXI1NmxqSzA1aEF3?oc=5",
+      "date": "Fri, 27 Mar 2026 14:53:23 GMT",
+      "query": "analyst upgrade stock",
+      "score": 3,
+      "symbols": []
+    },
+    {
+      "source": "google_news",
+      "type": "news_rumor",
+      "title": "Even if it goes nowhere, an SEC investigation will cost you - phys.org",
+      "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE9mSlE2Z1RXNG94RlMzYnMxS2lQNnJfcVNWU1FXYXkyY2EyZjU2OHlzNENVQXhDZk5YQXJrOEtIY0tXZVJpSGZ2X3VnM2xsNms?oc=5",
+      "date": "Thu, 26 Mar 2026 20:10:02 GMT",
+      "query": "SEC investigation company",
+      "score": 3,
+      "symbols": []
+    },
+    {
+      "source": "google_news",
+      "type": "news_rumor",
+      "title": "Paramount CEO Focused on 'Building' and 'Transforming' Amid WBD M&A Rumors - ADWEEK",
+      "link": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxOR0FndzBwSEN1UFh1ZE5uVld5YV9JLTZsZExUaVljQ1NpY2lMdHlabGMzZFpWeGtLeUZnZWlCMlY0U0FkXzFnTG51VGllem8tZ3BsNkVfVWZBRUJDVFhjMHFka1lBUnZGWGhzeWc2RkN0NmhRSk9pSmltZmdGZ2htcFVkakVLeFhOYlI5VndaRlFPWTZTSUw0ZGZHRmZ3S1lvQk9hTFo0VFZiTGM?oc=5",
+      "date": "Mon, 10 Nov 2025 08:00:00 GMT",
+      "query": "merger acquisition rumor",
+      "score": 2,
+      "symbols": []
+    },
+    {
+      "source": "google_news",
+      "type": "news_rumor",
+      "title": "WSP downplays M&A rumors, government shutdown - Construction Dive",
+      "link": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQLXBGdzR2Q2xDUWpLUjZvZHZNWlhyanQyMWhOLUQ1dENhdkMtS1FGR1pwN01hSWhtQmlrOTNvTlF6Q3hNdzZvemRka3lmbDZ4S2I3UzVUckhOZXg3S280N2pudVB3UVhKMkVTdG5vM2tHNWIyXzZoc0p4d3lVcjcySThycHNXb2pIMjJGa3RabmUzRW0zWlFXUGNSUQ?oc=5",
+      "date": "Fri, 07 Nov 2025 08:00:00 GMT",
+      "query": "merger acquisition rumor",
+      "score": 2,
+      "symbols": []
+    },
+    {
+      "source": "google_news",
+      "type": "news_rumor",
+      "title": "Rumors: Bally\u2019s Corp. Is Set to Acquire Evoke - GamblingNews",
+      "link": "https://news.google.com/rss/articles/CBMigwFBVV95cUxOT1JDZjlDWHZtQzE1RWRQM05SNFNESWdveGtqU1RfZWVGYjNjRDRMa29aQkI5Y095RWFyMXBPTi1OWklNa1R5bmV0MTdDWjQtdGJucVc4RzFoc0ZybVpSMzJsTmh1dlFKbE1hN3dOVm1IYjdpZ3A0SHFzMENiV0hMS0c4VQ?oc=5",
+      "date": "Fri, 20 Mar 2026 18:15:53 GMT",
+      "query": "merger acquisition rumor",
+      "score": 2,
+      "symbols": []
+    },
+    {
+      "source": "google_news",
+      "type": "news_rumor",
+      "title": "AMREP CORP. (AXR) 10% owner James Dahl buys 3,200 shares in open market - Stock Titan",
+      "link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxOc3UwNG1sLXpxMTZzYlJndi1ZV0N0NkxFdHc1VUoxNnd1clM4cFl0LWlYVmNiTXZQLUxLdFhrendKX1hWYkJkWVVIaW1Id2MycFlESWZ5WUZERTkza2lUN2drWnVhME1NSlR5Y3NjeWNLX2RqMjdmOExKbnBSUnN5WTExWnVSSV9aLXN6TUNJVk05TTQweHQyVmNBYWxxQ0M0MzJTODY1d0pXeUxwZFZWemdnNA?oc=5",
+      "date": "Fri, 27 Mar 2026 20:21:59 GMT",
+      "query": "insider buying stock",
+      "score": 0,
+      "symbols": []
+    }
+  ],
+  "buzz": [],
+  "symbol_counts": {}
+}
