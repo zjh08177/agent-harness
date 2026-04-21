@@ -55,14 +55,26 @@ fi
 ln -sf "$ROOT/hooks" ~/.claude/hooks
 echo "==> Linked ~/.claude/hooks → $ROOT/hooks"
 
-# 5. Remind about settings.json
+# 5. Wire harness-auto-commit hook into settings.json (idempotent)
 if [ ! -f ~/.claude/settings.json ]; then
   cp settings/settings.json.example ~/.claude/settings.json
   echo "==> Seeded ~/.claude/settings.json from example"
+fi
+
+if command -v jq >/dev/null 2>&1; then
+  if ! jq -e '.hooks.Stop[]?.hooks[]?.command | select(. == "~/.claude/hooks/harness-auto-commit.sh")' \
+       ~/.claude/settings.json >/dev/null 2>&1; then
+    tmpfile=$(mktemp)
+    jq '.hooks.Stop = (.hooks.Stop // []) + [{"hooks": [{"type": "command", "command": "~/.claude/hooks/harness-auto-commit.sh"}]}]' \
+       ~/.claude/settings.json > "$tmpfile" && mv "$tmpfile" ~/.claude/settings.json
+    echo "==> Wired harness-auto-commit.sh into Stop hook"
+  else
+    echo "==> harness-auto-commit.sh already wired"
+  fi
 else
   echo ""
-  echo "⚠️  Existing ~/.claude/settings.json NOT touched."
-  echo "    Review settings/settings.json.example and merge hook wiring manually."
+  echo "⚠️  jq not found — manually add to ~/.claude/settings.json hooks.Stop:"
+  echo '    {"hooks": [{"type": "command", "command": "~/.claude/hooks/harness-auto-commit.sh"}]}'
 fi
 
 echo ""

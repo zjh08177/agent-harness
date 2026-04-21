@@ -42,6 +42,21 @@ cd ~/.agents
 4. Symlink `~/.agents/hooks` → `~/.claude/hooks` (backs up existing)
 5. Remind user to review `~/.claude/settings.json` against `settings/settings.json.example`
 
+## Auto-commit on session end
+
+`hooks/harness-auto-commit.sh` fires on Claude Code `Stop` event. Batches all edits to `skills/`, `hooks/`, `settings/` since session start into one commit, with a `chore(<scope>): ...` title derived from changed paths.
+
+- **Commit only** (default): local commit; you push manually when ready.
+- **Auto-push**: `export HARNESS_AUTO_PUSH=1` in your shell.
+- **Emergency brake**: `export HARNESS_AUTO_COMMIT_OFF=1` disables the hook.
+
+Wire in `~/.claude/settings.json`:
+```json
+"Stop": [{ "hooks": [{"type": "command", "command": "~/.claude/hooks/harness-auto-commit.sh"}] }]
+```
+
+`install.sh` adds this automatically on fresh machines.
+
 ## Key conventions
 
 - **Meta-judge terminated review loops** — `skills/shared/META_JUDGE.md` defines 5 boolean terminator signals for multi-agent review cycles. Applied by `auto-workflow` / `auto-explore` / `auto-debug` at each round boundary.
