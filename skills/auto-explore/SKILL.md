@@ -56,7 +56,7 @@ Every Claude subagent in Phase 2 (Investigate, each round) + Phase 4 (Synthesis 
 
 **Mutual exclusion with `cx=on`:** If both are set, halt via `AskUserQuestion` — "Pick one provider for this run: codex or cursor." Do not silently prefer one.
 
-- Cursor has native web/codebase tooling in plan mode; covers `search-specialist` + `technical-researcher` + `feature-dev:code-explorer` equivalently to codex
+- Cursor's web + codebase tooling depends on the account's enabled features, not on an explicit CLI flag (unlike codex's `--enable web_search_cached`). Preflight MUST confirm `cursor-agent status` reports "Logged in". If a subsequent review returns empty/no-web-access output, degrade to `cs=off` for the affected phase and tag `[cursor-capability-missing]`. Do not assume parity with codex unless a smoke test confirms it.
 - Internal-docs (Lark) not Cursor-reachable — fallback to Claude `general-purpose` for that slot, tag `[cursor-bypass: lark-mcp]`
 
 Preflight from `CURSOR_REVIEW.md` before any phase. Cursor unavailable → degrade to `cs=off`, tell user.

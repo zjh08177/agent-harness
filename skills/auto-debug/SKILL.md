@@ -63,7 +63,12 @@ Per phase:
 3. Apply degradation matrix
 4. Merge findings, apply convergence rules identically
 
-Artifact handoff identical to `cx=on` (bug report + hypothesis → Phase 2; diff + root-cause summary → Phase 3; test diff → Phase 4). Anti-confirmation-bias prompt stays in each cursor prompt.
+Artifact handoff:
+- Phase 2 (Diagnose) — bug report + stack trace + reproduction steps + hypothesis (per role) → temp file in `$_CU_DIR`
+- Phase 3 (Fix review) — `git diff` patch + Phase 2 root-cause summary (Constitution's cold-review exception for bug fixes applies)
+- Phase 4 (Test Analyzer) — test diff + reproduction-step list
+
+Anti-confirmation-bias from Phase 2 (disprove your hypothesis, not prove it) stays in each cursor prompt.
 
 **Skills:**
 - `pua:pua-debugging` for all debugging — non-negotiable

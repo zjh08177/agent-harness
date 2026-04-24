@@ -59,6 +59,10 @@ _CU_ROLES=()
 #   -p                   headless, print to stdout (required for scripting)
 #   --trust              skip interactive workspace-trust prompt (required with -p)
 #   --mode plan          read-only/planning mode (no edits, parallel to codex `-s read-only`)
+#   --sandbox enabled    explicit OS-level sandbox (defense in depth over --mode plan).
+#                        Without this, a trusted headless session could read paths outside
+#                        the workspace — including ~/.claude/skills/**. The filesystem
+#                        boundary prefix above is advisory; --sandbox enabled is enforced.
 #   --workspace "$DIR"   anchor cursor to the repo root
 #   --output-format text plain-text output, no json framing
 #   </dev/null           detach stdin so background processes don't block on TTY
@@ -67,7 +71,7 @@ for i in "${!_CU_ROLE_PROMPTS[@]}"; do
   _PROMPT="${_CU_ROLE_PROMPTS[$i]}"
   _OUT="$_CU_DIR/$i-$_ROLE.md"
 
-  timeout 600 cursor-agent -p --trust --mode plan \
+  timeout 600 cursor-agent -p --trust --mode plan --sandbox enabled \
     --workspace "$_REPO_ROOT" --output-format text \
     "$_PROMPT" </dev/null > "$_OUT" 2>&1 &
 
