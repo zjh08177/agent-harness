@@ -17,6 +17,7 @@ description: Fully autonomous development workflow with 8 phases — Context Gat
 | `gate` | — | none | `auto-workflow gate=tech-solution` | Halt for user approval at specified phase |
 | `verify` | — | off | `auto-workflow verify=true` | Add false-positive verification pass to reviews |
 | `codex` | `cx` | off | `auto-workflow cx=on` | Replace every Claude subagent reviewer with `codex exec` (same N, same roles, same Constitution) |
+| `cursor` | `cs` | off | `auto-workflow cs=on` | Replace every Claude subagent reviewer with `cursor-agent` (same N, same roles, same Constitution). Mutually exclusive with `cx=on`. |
 
 ## Prerequisites
 
@@ -25,6 +26,7 @@ Read at session start:
 - `~/.claude/skills/shared/REVIEWER_CONSTITUTION.md` — Review prompts, Reviewer Diversity mandate, Round-Phase Rules, convergence criteria
 - `~/.claude/skills/shared/META_JUDGE.md` — Round-boundary terminator (5 boolean signals, meta-judge dispatch)
 - `~/.claude/skills/shared/CODEX_REVIEW.md` — **read only if `codex=on`.** Preflight, parallel invocation, degradation matrix.
+- `~/.claude/skills/shared/CURSOR_REVIEW.md` — **read only if `cs=on`.** Preflight, parallel invocation, degradation matrix.
 
 ## Codex review mode (`codex=on`)
 
@@ -46,6 +48,24 @@ Artifact handoff per phase:
 - Phase 6 (Test Analyzer) — diff + test file list
 
 Cold-review exceptions unchanged (design docs allow rationale eval; code review stays cold).
+
+## Cursor review mode (`cs=on`)
+
+Every reviewer in Phases 1-3, 5, 6 replaced 1:1 by parallel `cursor-agent`. N, roles, focus, Constitution, rounds unchanged — provider switches.
+
+**Mutual exclusion with `cx=on`:** If both are set, halt via `AskUserQuestion` — "Pick one provider for this run: codex or cursor." Do not silently prefer one; double-counting as "non-Claude" under Constitution §Reviewer Diversity would pollute convergence.
+
+Before any review phase: Preflight block from `CURSOR_REVIEW.md`. If Cursor unavailable → degrade whole session to `cs=off` and tell user.
+
+Per phase:
+1. Build `_CU_ROLE_NAMES` + `_CU_ROLE_PROMPTS` from phase's reviewer table (inline Constitution, append artifact path)
+2. Launch via parallel block in `CURSOR_REVIEW.md` (N background `cursor-agent -p --trust --mode plan` calls, `wait`, collect outputs per role)
+3. Apply degradation matrix
+4. Merge findings, apply convergence rules identically
+
+Artifact handoff per phase matches `cx=on` (ERD / tech-solution / impl-plan / diff / test-file list).
+
+Cold-review exceptions unchanged.
 
 **Lightweight mode** (`light`): ≤3 files changed — skip TeamCreate, planning files, vault doc routing, all agent spawns. All phases inline with main agent. Phase 1 Red Team = inline analysis. Phases 2/3/5 reviews = lead direct via Constitution. Phase 6 testing still runs fully.
 
