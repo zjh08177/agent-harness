@@ -15,8 +15,9 @@ description: Fully autonomous progressive research workflow with 5 phases — Sc
 | `rounds` | `r` | 3 | `auto-explore r=5` | Minimum progressive rounds |
 | `max_rounds` | `mr` | 3 | `auto-explore mr=5` | Hard cap |
 | `codex` | `cx` | off | `auto-explore cx=on` | Replace Claude subagents (investigate + review) with parallel `codex exec` |
+| `cursor` | `cs` | off | `auto-explore cs=on` | Replace Claude subagents (investigate + review) with parallel `cursor-agent`. Mutually exclusive with `cx=on`. |
 
-Combine: `auto-explore a=6 r=4 cx=on`
+Combine: `auto-explore a=6 r=4 cx=on` or `auto-explore a=6 r=4 cs=on`
 
 **Lightweight** (`light`): narrow well-defined question — skip TeamCreate, planning files, vault routing. Inline investigation (lead does web searches). Skip Phase 4 review. Concise in-conversation answer, not vault doc.
 
@@ -27,6 +28,7 @@ Read at session start:
 - `~/.claude/skills/shared/REVIEWER_CONSTITUTION.md` — Review prompts, Reviewer Diversity, Round-Phase Rules, convergence
 - `~/.claude/skills/shared/META_JUDGE.md` — Round-boundary terminator
 - `~/.claude/skills/shared/CODEX_REVIEW.md` — **read only if `cx=on`**
+- `~/.claude/skills/shared/CURSOR_REVIEW.md` — **read only if `cs=on`**
 
 ## Codex review mode (`codex=on`)
 

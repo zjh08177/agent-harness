@@ -28,6 +28,7 @@ Read at session start:
 - `~/.claude/skills/shared/REVIEWER_CONSTITUTION.md` — Review prompts, Reviewer Diversity, Round-Phase Rules, convergence
 - `~/.claude/skills/shared/META_JUDGE.md` — Round-boundary terminator
 - `~/.claude/skills/shared/CODEX_REVIEW.md` — **read only if `cx=on`**
+- `~/.claude/skills/shared/CURSOR_REVIEW.md` — **read only if `cs=on`**
 
 ## Codex review mode (`codex=on`)
 
@@ -47,6 +48,22 @@ Artifact handoff:
 - Phase 4 (Test Analyzer) — test diff + reproduction-step list
 
 Anti-confirmation-bias from Phase 2 (disprove your hypothesis, not prove it) stays in each codex prompt.
+
+## Cursor review mode (`cs=on`)
+
+Every Claude subagent in Phase 2 (Diagnose) + Phase 3 (Fix review) replaced 1:1 by parallel `cursor-agent`. N, roles, hypothesis structure, Constitution, rounds unchanged.
+
+**Mutual exclusion with `cx=on`:** If both are set, halt via `AskUserQuestion` — "Pick one provider for this run: codex or cursor." Do not silently prefer one.
+
+Preflight from `CURSOR_REVIEW.md`. Cursor unavailable → degrade to `cs=off`, tell user.
+
+Per phase:
+1. Build `_CU_ROLE_NAMES` + `_CU_ROLE_PROMPTS` from phase's agent table (one cursor-agent per role, Constitution inlined, artifact attached)
+2. Launch via parallel block in `CURSOR_REVIEW.md`
+3. Apply degradation matrix
+4. Merge findings, apply convergence rules identically
+
+Artifact handoff identical to `cx=on` (bug report + hypothesis → Phase 2; diff + root-cause summary → Phase 3; test diff → Phase 4). Anti-confirmation-bias prompt stays in each cursor prompt.
 
 **Skills:**
 - `pua:pua-debugging` for all debugging — non-negotiable
