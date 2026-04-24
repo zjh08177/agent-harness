@@ -50,6 +50,25 @@ Artifact handoff:
 - Phase 2 (per round) — research question + axes + prior-round findings → temp file in repo
 - Phase 4 (review) — synthesis doc copied into repo as temp file (vault paths outside `$_REPO_ROOT` not reachable under read-only)
 
+## Cursor review mode (`cs=on`)
+
+Every Claude subagent in Phase 2 (Investigate, each round) + Phase 4 (Synthesis review) replaced 1:1 by parallel `cursor-agent`. N, source-types, progressive-deepening, Constitution, rounds unchanged.
+
+**Mutual exclusion with `cx=on`:** If both are set, halt via `AskUserQuestion` — "Pick one provider for this run: codex or cursor." Do not silently prefer one.
+
+- Cursor has native web/codebase tooling in plan mode; covers `search-specialist` + `technical-researcher` + `feature-dev:code-explorer` equivalently to codex
+- Internal-docs (Lark) not Cursor-reachable — fallback to Claude `general-purpose` for that slot, tag `[cursor-bypass: lark-mcp]`
+
+Preflight from `CURSOR_REVIEW.md` before any phase. Cursor unavailable → degrade to `cs=off`, tell user.
+
+Per affected phase:
+1. Build `_CU_ROLE_NAMES` + `_CU_ROLE_PROMPTS` from phase's source-type table
+2. Launch via parallel block in `CURSOR_REVIEW.md`
+3. Apply degradation matrix
+4. Merge findings, apply convergence + progressive-deepening rules
+
+Artifact handoff identical to `cx=on` above.
+
 **Skills:**
 - `deep-research` for multi-source web research with citation tracking
 - `codebase-exploration` for code-level investigation
